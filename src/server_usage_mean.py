@@ -22,7 +22,7 @@ if __name__ == '__main__':
         plt.plot(df_mean_by_timestamp.index, mean_disk_usage, 'y', label='disk')
 
         plt.legend(bbox_to_anchor=[0.95, 1])
-        plt.title('server CPU, memory, disk usage')
+        plt.title('server CPU, memory, disk usage mean')
         plt.xlabel('timestamp(s)')
         plt.ylabel('usage(%)')
         plt.grid()
