@@ -8,6 +8,12 @@ def find_cpu_abnormal_machines(_df):
     # {4, 8, 20, 28, 32, 36, 40, 44, 46, 48, 50, 52, 56, 58, 60, 61, 62, 64, 65, 66, 68, 72, 84, 116, 120, 124}
     # 为什么会有部分物理机上服务容器申请的CPU资源超过了64核？
 
+    _df = _df.groupby('machine_id').sum()
+    _df = _df[_df['requested_cpu'] > 64]  # 筛选出服务容器申请CPU资源大于64核的机器
+    abnormal_machines = _df.index.tolist()
+    print('容器CPU资源申请异常机器的id: ' + str(abnormal_machines))
+    # 异常机器的id：[19, 56, 69, 102, 323, 671, 673, 676, 679, 797, 813, 829, 1120, 1134, 1241, 1251, 1295]
+
 
 def check_cpu_abnormal_machine_software_error(_df):
     """
