@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
+from src.common.column_name import server_usage_column_name
 
 if __name__ == '__main__':
 
@@ -11,10 +12,9 @@ if __name__ == '__main__':
         f = open(path, 'r', encoding='utf-8')
         data = pd.read_csv(f)
         df = pd.DataFrame(data)
-        df.columns = ['timestamp', 'machine_id', 'cpu_usage', 'memory_usage', 'disk_usage', 'cpu_load_1', 'cpu_load_5',
-                      'cpu_load_15']
+        df.columns = server_usage_column_name
 
-        df = df.pivot(index='machine_id', columns='timestamp', values='cpu_usage')
+        df = df.pivot(index='machine_id', columns='timestamp', values='cpu')
 
         norm = mpl.colors.Normalize(vmin=0, vmax=100)  # 标准化2D图colorbar的范围
         im = plt.imshow(df, interpolation='nearest', aspect='auto', norm=norm)

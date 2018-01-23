@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from src.common.column_name import container_event_column_name
+from src.common.column_name import server_usage_column_name
 
 
 def find_cpu_abnormal_machines(_df):
@@ -26,7 +28,7 @@ def check_cpu_abnormal_machine_software_error(_df):
     _f = open('..\dataset\server_event.csv', 'r', encoding='utf-8')
     _data = pd.read_csv(_f)
     _df = pd.DataFrame(_data)
-    _df.columns = ['timestamp', 'machine_id', 'event_type', 'event_detail', 'cpu', 'memory', 'disk']
+    _df.columns = server_usage_column_name
     print(_df[_df['machine_id'].isin(abnormal_machines)])
     # 这些机器的event_type都是add，并没有出现software error的异常，而且机器的CPU、内存都是正常的
 
@@ -39,16 +41,15 @@ if __name__ == '__main__':
         f = open(path, 'r', encoding='utf-8')
         data = pd.read_csv(f)
         df = pd.DataFrame(data)
-        df.columns = ['timestamp', 'event_type', 'instance_id', 'machine_id', 'requested_cpu', 'requested_memory',
-                      'requested_disk', 'cpu_ids', 'xxx']
+        df.columns = container_event_column_name
 
         # 12h中所有的event的状态都是Create：只有创建服务容器，没有删除服务容器
         # print(len(df[df['event_type'] == 'Create']) == len(df))  # print True
 
-        drop_columns = ['requested_disk', 'cpu_ids', 'xxx', 'timestamp', 'event_type', 'instance_id']
-        df.drop(drop_columns, inplace=True, axis=1)
+        # drop_columns = ['requested_disk', 'cpu_ids', 'xxx', 'timestamp', 'event_type', 'instance_id']
+        # df.drop(drop_columns, inplace=True, axis=1)
 
-        plt.hist(df.groupby('machine_id').sum()['requested_cpu'], bins=32, )
+        plt.hist(df.groupby('machine_id').sum()['cpu_requested'], bins=32, )
         plt.title('server CPU usage in time and space')
         plt.xlabel('requested CPUs')
         plt.ylabel('machine numbers')

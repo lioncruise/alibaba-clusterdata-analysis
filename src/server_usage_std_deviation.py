@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from src.common.column_name import server_usage_column_name
 
 if __name__ == '__main__':
 
@@ -9,8 +10,7 @@ if __name__ == '__main__':
         f = open(path, 'r', encoding='utf-8')
         data = pd.read_csv(f)
         df = pd.DataFrame(data)
-        df.columns = ['timestamp', 'machine_id', 'cpu_usage', 'memory_usage', 'disk_usage', 'cpu_load_1', 'cpu_load_5',
-                      'cpu_load_15']
+        df.columns = server_usage_column_name
         df_std_by_timestamp = df.groupby('timestamp').std()
         df_std_by_timestamp.columns = ['machine_id', 'cpu_usage', 'memory_usage', 'disk_usage', 'cpu_load_1',
                                        'cpu_load_5', 'cpu_load_15']
