@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from src.common.column_name import server_usage_column_name
 
+# 统计物理机最大、平均、最小内存资源利用率随时间的变化
 if __name__ == '__main__':
 
     path = '..\dataset\server_usage.csv'
@@ -21,8 +22,11 @@ if __name__ == '__main__':
 
         index = (max_grp.index - 39600) / 3600
         plt.plot(index, max_cpu_usage_by_timestamp, 'r', label='max')
-        plt.plot(index, mean_cpu_usage_by_timestamp, 'y', label='avg')
+        plt.plot(index, mean_cpu_usage_by_timestamp, 'green', label='avg')
         plt.plot(index, min_cpu_usage_by_timestamp, 'b', label='min')
+
+        # 给最大内存利用率曲线和最小内存利用率曲线之间的区域上色，更直观地反应极差
+        plt.fill_between(index, max_cpu_usage_by_timestamp, min_cpu_usage_by_timestamp, color='orange')
 
         plt.legend(bbox_to_anchor=[1, 1])
         plt.title('server memory usage\'s time distribution')
