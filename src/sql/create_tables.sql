@@ -103,3 +103,15 @@ CREATE TABLE batch_instance
   avg_memory_usage   DOUBLE       NULL
 )
   ENGINE = InnoDB;
+
+
+/*
+ 2018/1/27 数据库变更脚本
+ 修改server_usage和container_usage中和CPU load average相关的列名
+*/
+ALTER TABLE server_usage CHANGE cpu_1min cpu_load_1min DOUBLE;
+ALTER TABLE server_usage CHANGE cpu_5min cpu_load_5min DOUBLE;
+ALTER TABLE server_usage CHANGE cpu_15min cpu_load_15min DOUBLE;
+ALTER TABLE container_usage CHANGE cpu_1min cpu_load_1min DOUBLE;
+ALTER TABLE container_usage CHANGE cpu_5min cpu_load_5min DOUBLE;
+ALTER TABLE container_usage CHANGE cpu_15min cpu_load_15min DOUBLE;
