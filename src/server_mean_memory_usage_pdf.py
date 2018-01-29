@@ -16,12 +16,12 @@ if __name__ == '__main__':
         grp = df[['timestamp', 'machine_id', 'memory']].groupby('machine_id')
         mean_grp = grp.mean()
 
-        mean_cpu_usage_by_machine = mean_grp['memory']
+        mean_memory_usage_by_machine = mean_grp['memory']
 
         fig, ax = plt.subplots(figsize=(5, 4))
         num_bins = 100
 
-        ax.hist(mean_cpu_usage_by_machine, num_bins, normed=1,  # histtype='step',
+        ax.hist(mean_memory_usage_by_machine, num_bins, normed=1,  # histtype='step',
                 cumulative=False)
 
         ax.grid(True)
